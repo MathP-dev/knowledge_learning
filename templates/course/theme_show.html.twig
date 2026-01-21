@@ -1,0 +1,44 @@
+{% extends 'base. html.twig' %}
+
+{% block title %}{{ theme.name }} - Knowledge Learning{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_theme_list') }}">Thèmes</a></li>
+        <li class="breadcrumb-item active">{{ theme.name }}</li>
+    </ol>
+</nav>
+
+<div class="text-center mb-5">
+    <h1 class="display-4 text-primary-custom">{{ theme.name }}</h1>
+    {% if theme.description %}
+        <p class="lead">{{ theme.description }}</p>
+    {% endif %}
+</div>
+
+<div class="row">
+    {% for course in courses %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm hover-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description|default('Découvrez ce cursus complet.') }}</p>
+                    <p class="text-muted">{{ course.lessons|length }} leçon(s)</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="h4 text-primary-custom mb-0">{{ course.price }} €</span>
+                        <a href="{{ path('app_course_show', {slug: course. slug}) }}" class="btn btn-primary-custom">
+                            Voir le cursus
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">Aucun cursus disponible pour ce thème.</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

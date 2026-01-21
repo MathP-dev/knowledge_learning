@@ -1,0 +1,83 @@
+:root {
+    --primary-color: #f1f8fc;
+    --secondary-color:  #0074c7;
+    --accent-1: #00497c;
+    --accent-2: #384050;
+    --dark:  #cd2c2e;
+    --light: #82b864;
+}
+
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navigation */
+.bg-primary-custom {
+    background-color:  var(--primary-color) !important;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Boutons */
+.btn-primary-custom {
+    background-color:  var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary-custom:hover {
+    background-color: #5a4abd;
+    border-color: #5a4abd;
+    color: white;
+}
+
+/* Texte */
+.text-primary-custom {
+    color: var(--primary-color) !important;
+}
+
+/* Cards */
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform:  translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* Badges */
+.badge.bg-primary-custom {
+    background-color:  var(--primary-color) !important;
+}
+
+/* Alerts */
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Lesson content */
+.lesson-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width:  768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+}

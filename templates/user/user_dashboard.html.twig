@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte - Knowledge Learning{% endblock %}
+
+{% block body %}
+<h1 class="text-primary-custom mb-4">Mon compte</h1>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h3>{{ app.user.fullName }}</h3>
+                <p class="text-muted">{{ app.user.email }}</p>
+                <span class="badge bg-success">
+                    {% if app.user.isVerified %}Compte activé{% else %}Compte non activé{% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-primary-custom text-white">
+                <h4 class="mb-0">Mes achats</h4>
+            </div>
+            <div class="card-body">
+                {% if purchases %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Article</th>
+                                    <th>Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for purchase in purchases %}
+                                    <tr>
+                                        <td>{{ purchase. purchasedAt|date('d/m/Y') }}</td>
+                                        <td>
+                                            {% if purchase.course %}
+                                                <span class="badge bg-primary">Cursus</span>
+                                            {% else %}
+                                                <span class="badge bg-info">Leçon</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if purchase.course %}
+                                                <a href="{{ path('app_course_show', {slug:  purchase.course.slug}) }}">
+                                                    {{ purchase.course.title }}
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ path('app_lesson_show', {slug: purchase.lesson.slug}) }}">
+                                                    {{ purchase.lesson.title }}
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ purchase.amount }} €</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Vous n'avez pas encore effectué d'achat.</p>
+                    <a href="{{ path('app_theme_list') }}" class="btn btn-primary-custom">
+                        Parcourir les formations
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-header bg-primary-custom text-white">
+                <h4 class="mb-0">Mes certifications</h4>
+            </div>
+            <div class="card-body">
+                {% if certifications %}
+                    <div class="row">
+                        {% for certification in certifications %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card border-success">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success">
+                                            🏆 {{ certification.theme.name }}
+                                        </h5>
+                                        <p class="card-text text-muted">
+                                            Obtenue le {{ certification.obtainedAt|date('d/m/Y') }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">Vous n'avez pas encore de certification.</p>
+                    <p>Validez toutes les leçons d'un thème pour obtenir votre certification !</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+<! DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding:  0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #6A5ACD;
+        }
+        .header h1 {
+            color: #6A5ACD;
+            margin: 0;
+        }
+        .content {
+            padding: 30px 0;
+        }
+        . button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #6A5ACD;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin:  20px 0;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top:  1px solid #ddd;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Knowledge Learning</h1>
+        </div>
+        <div class="content">
+            <h2>Bienvenue {{ user.firstName }} !</h2>
+            <p>Merci de vous être inscrit sur Knowledge Learning. </p>
+            <p>Pour activer votre compte et commencer à apprendre, veuillez cliquer sur le bouton ci-dessous :</p>
+            <div style="text-align: center;">
+                <a href="{{ verificationUrl }}" class="button">Activer mon compte</a>
+            </div>
+            <p>Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur :</p>
+            <p style="word-break: break-all; color: #6A5ACD;">{{ verificationUrl }}</p>
+            <p>Ce lien est valide pendant 24 heures.</p>
+        </div>
+        <div class="footer">
+            <p>&copy; {{ 'now'|date('Y') }} Knowledge Learning. Tous droits réservés.</p>
+        </div>
+    </div>
+</body>
+</html>

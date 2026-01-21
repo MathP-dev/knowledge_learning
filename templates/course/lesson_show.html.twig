@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ lesson. title }} - Knowledge Learning{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_theme_list') }}">Thèmes</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_theme_show', {slug: lesson.course.theme.slug}) }}">{{ lesson.course.theme.name }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_course_show', {slug: lesson. course.slug}) }}">{{ lesson.course.title }}</a></li>
+        <li class="breadcrumb-item active">{{ lesson.title }}</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-lg-8">
+        <h1 class="text-primary-custom">{{ lesson.title }}</h1>
+        <p class="text-muted">Cursus : {{ lesson.course.title }}</p>
+
+        {% if hasAccess %}
+            <div class="alert alert-success">
+                <strong>Vous avez accès à cette leçon !</strong>
+            </div>
+
+            {% if lesson.videoUrl %}
+                <div class="ratio ratio-16x9 mb-4">
+                    <iframe src="{{ lesson.videoUrl }}" allowfullscreen></iframe>
+                </div>
+            {% endif %}
+
+            <div class="lesson-content">
+                <h3>Contenu de la leçon</h3>
+                {{ lesson.content|default('
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                ')|raw }}
+            </div>
+
+            {% if app.user %}
+                <div class="mt-4">
+                    <a href="{{ path('app_lesson_validate', {slug: lesson.slug}) }}" 
+                       class="btn btn-success btn-lg">
+                        ✓ Valider cette leçon
+                    </a>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-warning">
+                <strong>Vous n'avez pas accès à cette leçon.</strong>
+                <p>Pour accéder au contenu, vous devez acheter cette leçon ou le cursus complet.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Aperçu de la leçon</h5>
+                    <p class="card-text">Cette leçon fait partie du cursus "{{ lesson.course.title }}".</p>
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit... </p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow sticky-top" style="top: 20px;">
+            <div class="card-body">
+                {% if not hasAccess %}
+                    <h3 class="card-title">{{ lesson.price }} €</h3>
+                    <p class="card-text">Achetez cette leçon individuellement</p>
+                    
+                    {% if app.user %}
+                        {% if app.user.isVerified %}
+                            <a href="{{ path('app_lesson_buy', {slug: lesson.slug}) }}" 
+                               class="btn btn-primary-custom w-100 mb-2">
+                                Acheter cette leçon
+                            </a>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                Activez votre compte pour acheter. 
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-primary-custom w-100 mb-2">
+                            Connectez-vous
+                        </a>
+                    {% endif %}
+
+                    <hr>
+
+                    <p class="text-center text-muted">OU</p>
+
+                    <h4 class="text-center">{{ lesson.course.price }} €</h4>
+                    <p class="text-center text-muted">Cursus complet</p>
+                    <a href="{{ path('app_course_show', {slug: lesson.course.slug}) }}" 
+                       class="btn btn-outline-primary w-100">
+                        Voir le cursus
+                    </a>
+                {% else %}
+                    <div class="alert alert-success">
+                        <i class="bi bi-check-circle"></i> Accès débloqué
+                    </div>
+
+                    <h5>Navigation</h5>
+                    <div class="list-group">
+                        {% for otherLesson in lesson.course. lessons %}
+                            <a href="{{ path('app_lesson_show', {slug: otherLesson.slug}) }}" 
+                               class="list-group-item list-group-item-action {% if otherLesson. id == lesson.id %}active{% endif %}">
+                                Leçon {{ otherLesson.position }}: {{ otherLesson.title }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
