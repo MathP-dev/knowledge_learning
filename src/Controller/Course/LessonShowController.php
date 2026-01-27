@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class LessonShowController extends AbstractController
 {
     public function __construct(
-        private LessonService $lessonService
+        private readonly LessonService $lessonService
     ) {
     }
 

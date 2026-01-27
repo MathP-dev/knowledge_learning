@@ -22,19 +22,19 @@
                 <form method="post" action="{{ path('app_register') }}">
                     <div class="mb-3">
                         <label for="firstName" class="form-label">Prénom</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" 
+                        <input type="text" class="form-control" id="firstName" name="firstName"
                                value="{{ dto.firstName }}" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Nom</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" 
+                        <input type="text" class="form-control" id="lastName" name="lastName"
                                value="{{ dto.lastName }}" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" 
+                        <input type="email" class="form-control" id="email" name="email"
                                value="{{ dto.email }}" required>
                     </div>
 
@@ -51,7 +51,7 @@
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary-custom w-100">S'inscrire</button>
+                    <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
                 </form>
 
                 <div class="text-center mt-3">

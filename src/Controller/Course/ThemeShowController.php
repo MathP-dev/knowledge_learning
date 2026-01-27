@@ -25,7 +25,7 @@ class ThemeShowController extends AbstractController
 
         $courses = $this->courseService->getCoursesByTheme($theme);
 
-        return $this->render('course/theme_show.html. twig', [
+        return $this->render('course/theme_show.html.twig', [
             'theme' => $theme,
             'courses' => $courses,
         ]);

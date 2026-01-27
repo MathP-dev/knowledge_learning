@@ -41,7 +41,7 @@
 
             {% if app.user %}
                 <div class="mt-4">
-                    <a href="{{ path('app_lesson_validate', {slug: lesson.slug}) }}" 
+                    <a href="{{ path('app_lesson_validate', {slug: lesson.slug}) }}"
                        class="btn btn-success btn-lg">
                         ✓ Valider cette leçon
                     </a>
@@ -69,20 +69,20 @@
                 {% if not hasAccess %}
                     <h3 class="card-title">{{ lesson.price }} €</h3>
                     <p class="card-text">Achetez cette leçon individuellement</p>
-                    
+
                     {% if app.user %}
                         {% if app.user.isVerified %}
-                            <a href="{{ path('app_lesson_buy', {slug: lesson.slug}) }}" 
-                               class="btn btn-primary-custom w-100 mb-2">
+                            <a href="{{ path('app_lesson_buy', {slug: lesson.slug}) }}"
+                               class="btn btn-primary w-100 mb-2">
                                 Acheter cette leçon
                             </a>
                         {% else %}
                             <div class="alert alert-warning">
-                                Activez votre compte pour acheter. 
+                                Activez votre compte pour acheter.
                             </div>
                         {% endif %}
                     {% else %}
-                        <a href="{{ path('app_login') }}" class="btn btn-primary-custom w-100 mb-2">
+                        <a href="{{ path('app_login') }}" class="btn btn-primary w-100 mb-2">
                             Connectez-vous
                         </a>
                     {% endif %}
@@ -93,7 +93,7 @@
 
                     <h4 class="text-center">{{ lesson.course.price }} €</h4>
                     <p class="text-center text-muted">Cursus complet</p>
-                    <a href="{{ path('app_course_show', {slug: lesson.course.slug}) }}" 
+                    <a href="{{ path('app_course_show', {slug: lesson.course.slug}) }}"
                        class="btn btn-outline-primary w-100">
                         Voir le cursus
                     </a>
@@ -105,7 +105,7 @@
                     <h5>Navigation</h5>
                     <div class="list-group">
                         {% for otherLesson in lesson.course. lessons %}
-                            <a href="{{ path('app_lesson_show', {slug: otherLesson.slug}) }}" 
+                            <a href="{{ path('app_lesson_show', {slug: otherLesson.slug}) }}"
                                class="list-group-item list-group-item-action {% if otherLesson. id == lesson.id %}active{% endif %}">
                                 Leçon {{ otherLesson.position }}: {{ otherLesson.title }}
                             </a>

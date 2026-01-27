@@ -20,7 +20,7 @@
         <h3 class="mt-5 mb-3">Contenu du cursus</h3>
         <div class="list-group">
             {% for lesson in course.lessons %}
-                <a href="{{ path('app_lesson_show', {slug: lesson.slug}) }}" 
+                <a href="{{ path('app_lesson_show', {slug: lesson.slug}) }}"
                    class="list-group-item list-group-item-action">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -39,11 +39,11 @@
             <div class="card-body">
                 <h3 class="card-title">{{ course.price }} €</h3>
                 <p class="card-text">Cursus complet avec {{ course.lessons|length }} leçons</p>
-                
+
                 {% if app.user %}
                     {% if app.user.isVerified %}
-                        <a href="{{ path('app_course_buy', {slug: course.slug}) }}" 
-                           class="btn btn-primary-custom w-100 mb-2">
+                        <a href="{{ path('app_course_buy', {slug: course.slug}) }}"
+                           class="btn btn-primary w-100 mb-2">
                             Acheter le cursus
                         </a>
                     {% else %}
@@ -52,7 +52,7 @@
                         </div>
                     {% endif %}
                 {% else %}
-                    <a href="{{ path('app_login') }}" class="btn btn-primary-custom w-100 mb-2">
+                    <a href="{{ path('app_login') }}" class="btn btn-primary w-100 mb-2">
                         Connectez-vous pour acheter
                     </a>
                 {% endif %}

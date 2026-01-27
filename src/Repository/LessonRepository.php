@@ -21,7 +21,7 @@ class LessonRepository extends ServiceEntityRepository
             ->addSelect('c')
             ->leftJoin('c.theme', 't')
             ->addSelect('t')
-            ->where('l.slug = : slug')
+            ->where('l.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
             ->getOneOrNullResult();

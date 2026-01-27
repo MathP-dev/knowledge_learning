@@ -6,7 +6,7 @@ use App\Entity\Lesson;
 use App\Entity\User;
 use App\Repository\LessonRepository;
 
-class LessonService
+readonly class LessonService
 {
     public function __construct(
         private LessonRepository $lessonRepository
