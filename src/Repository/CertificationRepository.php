@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Certification;
+use App\Entity\Course;
 use App\Entity\Theme;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -20,16 +21,16 @@ class CertificationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.user = :user')
             ->setParameter('user', $user)
-            ->leftJoin('c.theme', 't')
-            ->addSelect('t')
+            ->leftJoin('c.course', 'co')
+            ->addSelect('co')
             ->orderBy('c.obtainedAt', 'DESC')
             ->getQuery()
             ->getResult();
     }
 
-    public function findByUserAndTheme(User $user, Theme $theme): ?Certification
+    public function findByUserAndCourse(User $user, Course $course): ?Certification
     {
-        return $this->findOneBy(['user' => $user, 'theme' => $theme]);
+        return $this->findOneBy(['user' => $user, 'course' => $course]);
     }
 
     public function save(Certification $certification, bool $flush = false): void

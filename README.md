@@ -465,4 +465,12 @@ symfony serve
 # OU
 php -S localhost:8000 -t public/
 
+A AJOUTER : 
+INSTALLER MAILHOG POUR TESTER LES EMAILS EN LOCAL
+LANCER LE .exe et ACCEDER A L'INTERFACE SUR http://localhost:8025
+
+
+stripe : stripe listen --forward-to https://127.0.0.1:8000/webhook/stripe
+recup clé webhook et ajouter dans .env.local (whsec_....)
+
 

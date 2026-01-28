@@ -3,20 +3,20 @@
 namespace App\Service\User;
 
 use App\Entity\Certification;
-use App\Entity\Theme;
+use App\Entity\Course;
 use App\Entity\User;
 use App\Repository\CertificationRepository;
 
-class CertificationService
+readonly class CertificationService
 {
     public function __construct(
         private CertificationRepository $certificationRepository
     ) {
     }
 
-    public function awardCertification(User $user, Theme $theme): void
+    public function awardCertification(User $user, Course $course): void
     {
-        $existingCertification = $this->certificationRepository->findByUserAndTheme($user, $theme);
+        $existingCertification = $this->certificationRepository->findByUserAndCourse($user, $course);
 
         if ($existingCertification) {
             return;
@@ -24,7 +24,7 @@ class CertificationService
 
         $certification = new Certification();
         $certification->setUser($user);
-        $certification->setTheme($theme);
+        $certification->setCourse($course);
 
         $this->certificationRepository->save($certification, true);
     }

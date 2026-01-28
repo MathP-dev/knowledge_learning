@@ -48,10 +48,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $purchases;
 
-    #[ORM\OneToMany(targetEntity: LessonValidation::class, mappedBy:  'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: LessonValidation::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $lessonValidations;
 
-    #[ORM\OneToMany(targetEntity:  Certification::class, mappedBy:  'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Certification::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $certifications;
 
     public function __construct()

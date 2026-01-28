@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/paiement/succes', name: 'app_payment_success')]
+#[Route('/payment/success', name: 'app_payment_success')]
 #[IsGranted('ROLE_USER')]
 class PaymentSuccessController extends AbstractController
 {
@@ -26,7 +26,7 @@ class PaymentSuccessController extends AbstractController
         private LessonRepository $lessonRepository,
         private ParameterBagInterface $params
     ) {
-        Stripe::setApiKey($this->params->get('stripe. secret_key'));
+        Stripe::setApiKey($this->params->get('stripe.secret_key'));
     }
 
     public function __invoke(Request $request): Response
@@ -62,7 +62,7 @@ class PaymentSuccessController extends AbstractController
                 $lesson
             );
 
-            return $this->render('payment/success. html.twig', [
+            return $this->render('payment/success.html.twig', [
                 'course' => $course,
                 'lesson' => $lesson,
             ]);

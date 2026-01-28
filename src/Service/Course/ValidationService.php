@@ -5,16 +5,17 @@ namespace App\Service\Course;
 use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Entity\LessonValidation;
-use App\Entity\Theme;
 use App\Entity\User;
 use App\Repository\LessonValidationRepository;
 use App\Service\User\CertificationService;
+use Psr\Log\LoggerInterface;
 
-class ValidationService
+readonly class ValidationService
 {
     public function __construct(
         private LessonValidationRepository $validationRepository,
-        private CertificationService $certificationService
+        private CertificationService       $certificationService,
+        private LoggerInterface            $logger
     ) {
     }
 
@@ -32,13 +33,13 @@ class ValidationService
 
         $this->validationRepository->save($validation, true);
 
-        // Vérifier si toutes les leçons du cursus sont validées
         $this->checkCourseCompletion($user, $lesson->getCourse());
     }
 
     private function checkCourseCompletion(User $user, Course $course): void
     {
         $allLessons = $course->getLessons();
+        $totalLessons = $allLessons->count();
         $validatedLessons = 0;
 
         foreach ($allLessons as $lesson) {
@@ -47,35 +48,14 @@ class ValidationService
             }
         }
 
-        // Si toutes les leçons sont validées
-        if ($validatedLessons === count($allLessons)) {
-            $this->checkThemeCompletion($user, $course->getTheme());
-        }
-    }
+        if ($validatedLessons === $totalLessons && $totalLessons > 0) {
+            $this->logger->info('Certification awarded', [
+                'user_id' => $user->getId(),
+                'course_id' => $course->getId(),
+                'course_title' => $course->getTitle()
+            ]);
 
-    private function checkThemeCompletion(User $user, Theme $theme): void
-    {
-        $allCourses = $theme->getCourses();
-        $completedCourses = 0;
-
-        foreach ($allCourses as $course) {
-            $allLessons = $course->getLessons();
-            $validatedLessons = 0;
-
-            foreach ($allLessons as $lesson) {
-                if ($this->validationRepository->findByUserAndLesson($user, $lesson)) {
-                    $validatedLessons++;
-                }
-            }
-
-            if ($validatedLessons === count($allLessons)) {
-                $completedCourses++;
-            }
-        }
-
-        // Si tous les cursus du thème sont complétés, décerner la certification
-        if ($completedCourses === count($allCourses)) {
-            $this->certificationService->awardCertification($user, $theme);
+            $this->certificationService->awardCertification($user, $course);
         }
     }
 

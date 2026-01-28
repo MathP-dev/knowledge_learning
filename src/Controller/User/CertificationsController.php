@@ -22,7 +22,7 @@ class CertificationsController extends AbstractController
         $user = $this->getUser();
         $certifications = $this->certificationService->getUserCertifications($user);
 
-        return $this->render('user/certifications. html.twig', [
+        return $this->render('user/certifications.html.twig', [
             'certifications' => $certifications,
         ]);
     }

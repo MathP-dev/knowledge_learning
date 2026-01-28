@@ -18,14 +18,14 @@ class EmailService
 
     public function sendVerificationEmail(User $user): void
     {
-        $baseUrl = $this->params->get('site. base_url');
+        $baseUrl = $this->params->get('site.base_url');
         $verificationUrl = $baseUrl . '/verification/' . $user->getVerificationToken();
 
         $email = (new TemplatedEmail())
             ->from(new Address('noreply@knowledge-learning.com', 'Knowledge Learning'))
             ->to(new Address($user->getEmail(), $user->getFullName()))
             ->subject('Confirmez votre compte Knowledge Learning')
-            ->htmlTemplate('emails/verification. html.twig')
+            ->htmlTemplate('emails/verification.html.twig')
             ->context([
                 'user' => $user,
                 'verificationUrl' => $verificationUrl,
