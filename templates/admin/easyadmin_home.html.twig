@@ -1,0 +1,95 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}
+    <h1>Administration EasyAdmin</h1>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <h4>👋 Bienvenue dans l'interface d'administration</h4>
+                    <p>Utilisez le menu de gauche pour gérer les différentes entités de votre plateforme.</p>
+                    <hr>
+                    <a href="{{ path('app_admin_dashboard') }}" class="btn btn-primary">
+                        📊 Voir le tableau de bord avec statistiques
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">👥 Gestion des utilisateurs</h5>
+                        <p class="card-text">Gérer les comptes, rôles et permissions</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController').setAction('index') }}" class="btn btn-sm btn-primary">
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">🎨 Gestion des thèmes</h5>
+                        <p class="card-text">Organiser les cours par thématique</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\ThemeCrudController').setAction('index') }}" class="btn btn-sm btn-warning">
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">📚 Gestion des cours</h5>
+                        <p class="card-text">Créer et modifier les cours</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\CourseCrudController').setAction('index') }}" class="btn btn-sm btn-success">
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">📖 Gestion des leçons</h5>
+                        <p class="card-text">Ajouter du contenu aux cours</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\LessonCrudController').setAction('index') }}" class="btn btn-sm btn-secondary">
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">💰 Historique des achats</h5>
+                        <p class="card-text">Consulter les transactions</p>
+                        <a href="{{ ea_url().setController('App\\Controller\\Admin\\PurchaseCrudController').setAction('index') }}" class="btn btn-sm btn-info">
+                            Accéder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="alert alert-secondary">
+                    <strong>💡 Astuce :</strong> Vous pouvez également accéder à toutes ces sections via le menu de navigation à gauche.
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
