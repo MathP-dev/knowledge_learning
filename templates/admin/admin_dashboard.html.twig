@@ -3,123 +3,223 @@
 {% block title %}Administration - Knowledge Learning{% endblock %}
 
 {% block body %}
-<h1 class="text-primary mb-4">Tableau de bord administrateur</h1>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary">📊 Tableau de bord administrateur</h1>
+        <a href="{{ path('app_home') }}" class="btn btn-outline-primary">
+            <i class="fa fa-arrow-left"></i> Retour au site
+        </a>
+    </div>
 
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="card text-center shadow">
-            <div class="card-body">
-                <h3 class="display-4">{{ users|length }}</h3>
-                <p class="text-muted">Utilisateurs</p>
+    {# Section des statistiques #}
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm border-primary">
+                <div class="card-body">
+                    <h3 class="display-4 text-primary">{{ users|length }}</h3>
+                    <p class="text-muted mb-2">👥 Utilisateurs</p>
+                    <small class="text-success">{{ stats.verified_users }} vérifiés</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm border-success">
+                <div class="card-body">
+                    <h3 class="display-4 text-success">{{ courses|length }}</h3>
+                    <p class="text-muted mb-0">📚 Cours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm border-info">
+                <div class="card-body">
+                    <h3 class="display-4 text-info">{{ purchases|length }}</h3>
+                    <p class="text-muted mb-0">💰 Achats</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm border-warning">
+                <div class="card-body">
+                    <h3 class="display-4 text-warning">{{ stats.total_revenue|number_format(2, ',', ' ') }}€</h3>
+                    <p class="text-muted mb-0">💵 Revenu total</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card text-center shadow">
-            <div class="card-body">
-                <h3 class="display-4">{{ courses|length }}</h3>
-                <p class="text-muted">Cursus</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-center shadow">
-            <div class="card-body">
-                <h3 class="display-4">{{ purchases|length }}</h3>
-                <p class="text-muted">Achats</p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="card shadow mb-4">
-    <div class="card-header bg-primary text-white">
-        <h4 class="mb-0">Utilisateurs</h4>
+    {# Section CRUD - Actions rapides #}
+    <div class="card shadow mb-4 border-0">
+        <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <h4 class="mb-0">⚡ Actions rapides - Gestion CRUD</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 border-primary">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">👥 Utilisateurs</h5>
+                            <p class="card-text text-muted">Gérer les comptes utilisateurs, rôles et permissions</p>
+                            <a href="{{ path('admin_crud') }}?crudAction=index&crudControllerFqcn=App\Controller\Admin\UserCrudController" class="btn btn-primary btn-sm">
+                                <i class="fa fa-users"></i> Gérer les utilisateurs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 border-success">
+                        <div class="card-body">
+                            <h5 class="card-title text-success">📚 Cours & Leçons</h5>
+                            <p class="card-text text-muted">Créer et modifier les cours, leçons et thèmes</p>
+                            <div class="d-grid gap-2">
+                                <a href="{{ path('admin_crud') }}?crudAction=index&crudControllerFqcn=App\Controller\Admin\ThemeCrudController" class="btn btn-success btn-sm">
+                                    <i class="fa fa-folder"></i> Gérer les thèmes
+                                </a>
+                                <a href="{{ path('admin_crud') }}?crudAction=index&crudControllerFqcn=App\Controller\Admin\CourseCrudController" class="btn btn-outline-success btn-sm">
+                                    <i class="fa fa-book"></i> Gérer les cours
+                                </a>
+                                <a href="{{ path('admin_crud') }}?crudAction=index&crudControllerFqcn=App\Controller\Admin\LessonCrudController" class="btn btn-outline-success btn-sm">
+                                    <i class="fa fa-file-video"></i> Gérer les leçons
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 border-info">
+                        <div class="card-body">
+                            <h5 class="card-title text-info">💰 Ventes</h5>
+                            <p class="card-text text-muted">Consulter l'historique des transactions</p>
+                            <a href="{{ path('admin_crud') }}?crudAction=index&crudControllerFqcn=App\Controller\Admin\PurchaseCrudController" class="btn btn-info btn-sm">
+                                <i class="fa fa-shopping-cart"></i> Voir les achats
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Boutons de création rapide #}
+            <div class="mt-3 pt-3 border-top">
+                <h6 class="text-muted mb-3">Créer rapidement :</h6>
+                <a href="{{ path('admin_crud') }}?crudAction=new&crudControllerFqcn=App\Controller\Admin\UserCrudController" class="btn btn-sm btn-outline-primary me-2 mb-2">
+                    <i class="fa fa-plus"></i> Nouvel utilisateur
+                </a>
+                <a href="{{ path('admin_crud') }}?crudAction=new&crudControllerFqcn=App\Controller\Admin\ThemeCrudController" class="btn btn-sm btn-outline-success me-2 mb-2">
+                    <i class="fa fa-plus"></i> Nouveau thème
+                </a>
+                <a href="{{ path('admin_crud') }}?crudAction=new&crudControllerFqcn=App\Controller\Admin\CourseCrudController" class="btn btn-sm btn-outline-success me-2 mb-2">
+                    <i class="fa fa-plus"></i> Nouveau cours
+                </a>
+                <a href="{{ path('admin_crud') }}?crudAction=new&crudControllerFqcn=App\Controller\Admin\LessonCrudController" class="btn btn-sm btn-outline-success me-2 mb-2">
+                    <i class="fa fa-plus"></i> Nouvelle leçon
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Email</th>
-                        <th>Vérifié</th>
-                        <th>Rôle</th>
-                        <th>Date d'inscription</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in users %}
+
+    {# Tableau des utilisateurs #}
+    <div class="card shadow mb-4 border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">👥 Utilisateurs récents</h4>
+            <a href="{{ path('admin_crud') }}?crudAction=index&crudControllerFqcn=App\Controller\Admin\UserCrudController" class="btn btn-sm btn-light">
+                Voir tous
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
                         <tr>
-                            <td>{{ user.fullName }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>
-                                {% if user.isVerified %}
-                                    <span class="badge bg-success">Oui</span>
-                                {% else %}
-                                    <span class="badge bg-warning">Non</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if 'ROLE_ADMIN' in user.roles %}
-                                    <span class="badge bg-danger">Admin</span>
-                                {% else %}
-                                    <span class="badge bg-primary">User</span>
-                                {% endif %}
-                            </td>
-                            <td>{{ user. createdAt|date('d/m/Y') }}</td>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Vérifié</th>
+                            <th>Rôle</th>
+                            <th>Date d'inscription</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for user in users|slice(0, 10) %}
+                            <tr>
+                                <td><strong>{{ user.fullName }}</strong></td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {% if user.isVerified %}
+                                        <span class="badge bg-success">✓ Vérifié</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">⚠ Non vérifié</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if 'ROLE_ADMIN' in user.roles %}
+                                        <span class="badge bg-danger">🛡️ Admin</span>
+                                    {% else %}
+                                        <span class="badge bg-primary">👤 User</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ user.createdAt|date('d/m/Y') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="card shadow">
-    <div class="card-header bg-primary text-white">
-        <h4 class="mb-0">Derniers achats</h4>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Utilisateur</th>
-                        <th>Type</th>
-                        <th>Article</th>
-                        <th>Montant</th>
-                        <th>Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for purchase in purchases|slice(0, 10) %}
+    {# Tableau des derniers achats #}
+    <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">💰 Derniers achats</h4>
+            <a href="{{ path('admin_crud') }}?crudAction=index&crudControllerFqcn=App\Controller\Admin\PurchaseCrudController" class="btn btn-sm btn-light">
+                Voir tous
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
                         <tr>
-                            <td>{{ purchase.purchasedAt|date('d/m/Y H:i') }}</td>
-                            <td>{{ purchase.user.fullName }}</td>
-                            <td>
-                                {% if purchase.course %}
-                                    <span class="badge bg-primary">Cursus</span>
-                                {% else %}
-                                    <span class="badge bg-info">Leçon</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if purchase.course %}
-                                    {{ purchase.course.title }}
-                                {% else %}
-                                    {{ purchase.lesson.title }}
-                                {% endif %}
-                            </td>
-                            <td>{{ purchase.amount }} €</td>
-                            <td>
-                                <span class="badge bg-success">{{ purchase.status }}</span>
-                            </td>
+                            <th>Date</th>
+                            <th>Utilisateur</th>
+                            <th>Type</th>
+                            <th>Article</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for purchase in stats.recent_purchases %}
+                            <tr>
+                                <td>{{ purchase.purchasedAt|date('d/m/Y H:i') }}</td>
+                                <td><strong>{{ purchase.user.fullName }}</strong></td>
+                                <td>
+                                    {% if purchase.course %}
+                                        <span class="badge bg-primary">📚 Cursus</span>
+                                    {% else %}
+                                        <span class="badge bg-info">📖 Leçon</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if purchase.course %}
+                                        {{ purchase.course.title }}
+                                    {% else %}
+                                        {{ purchase.lesson.title }}
+                                    {% endif %}
+                                </td>
+                                <td><strong>{{ purchase.amount|number_format(2, ',', ' ') }} €</strong></td>
+                                <td>
+                                    {% if purchase.status == 'completed' %}
+                                        <span class="badge bg-success">✓ Complété</span>
+                                    {% elseif purchase.status == 'pending' %}
+                                        <span class="badge bg-warning">⏳ En attente</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ purchase.status }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

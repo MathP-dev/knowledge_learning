@@ -15,8 +15,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class DashboardController extends AbstractController
 {
     public function __construct(
-        private readonly UserService   $userService,
-        private readonly CourseService $courseService,
+        private readonly UserService     $userService,
+        private readonly CourseService   $courseService,
         private readonly PurchaseService $purchaseService
     ) {
     }
@@ -27,10 +27,37 @@ class DashboardController extends AbstractController
         $courses = $this->courseService->getAllCourses();
         $purchases = $this->purchaseService->getAllPurchases();
 
+        $stats = [
+            'total_revenue' => $this->calculateTotalRevenue($purchases),
+            'verified_users' => $this->countVerifiedUsers($users),
+            'recent_purchases' => array_slice($purchases, 0, 10),
+        ];
+
         return $this->render('admin/admin_dashboard.html.twig', [
             'users' => $users,
             'courses' => $courses,
             'purchases' => $purchases,
+            'stats' => $stats,
         ]);
+    }
+
+    /**
+     * Calcule le revenu total des achats
+     */
+    private function calculateTotalRevenue(array $purchases): float
+    {
+        return array_reduce($purchases, function ($total, $purchase) {
+            return $total + (float) $purchase->getAmount();
+        }, 0.0);
+    }
+
+    /**
+     * Compte le nombre d'utilisateurs vérifiés
+     */
+    private function countVerifiedUsers(array $users): int
+    {
+        return count(array_filter($users, function ($user) {
+            return $user->isVerified();
+        }));
     }
 }

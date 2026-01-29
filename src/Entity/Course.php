@@ -138,4 +138,9 @@ class Course
     {
         return $this->createdAt;
     }
+
+    public function __toString(): string
+    {
+        return $this->title ?? 'Nouveau cours';
+    }
 }
