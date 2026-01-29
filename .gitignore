@@ -1,3 +1,6 @@
+# PhpStorm
+/.idea/
+*.iml
 
 ###> symfony/framework-bundle ###
 /.env.local
