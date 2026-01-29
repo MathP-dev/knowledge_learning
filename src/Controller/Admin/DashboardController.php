@@ -15,9 +15,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class DashboardController extends AbstractController
 {
     public function __construct(
-        private UserService $userService,
-        private CourseService $courseService,
-        private PurchaseService $purchaseService
+        private readonly UserService   $userService,
+        private readonly CourseService $courseService,
+        private readonly PurchaseService $purchaseService
     ) {
     }
 

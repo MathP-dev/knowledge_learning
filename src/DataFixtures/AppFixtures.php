@@ -21,17 +21,16 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Créer un utilisateur admin
+
         $admin = new User();
         $admin->setFirstName('Admin');
         $admin->setLastName('Knowledge');
         $admin->setEmail('admin@knowledge-learning.com');
-        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'Admin123! '));
+        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'Admin123!'));
         $admin->setVerified(true);
         $admin->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
         $manager->persist($admin);
 
-        // Créer un utilisateur test
         $user = new User();
         $user->setFirstName('Jean');
         $user->setLastName('Dupont');
@@ -40,7 +39,6 @@ class AppFixtures extends Fixture
         $user->setVerified(true);
         $manager->persist($user);
 
-        // Données des thèmes et cursus
         $data = [
             'Musique' => [
                 [

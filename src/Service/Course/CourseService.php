@@ -10,8 +10,8 @@ use App\Repository\ThemeRepository;
 class CourseService
 {
     public function __construct(
-        private CourseRepository $courseRepository,
-        private ThemeRepository $themeRepository
+        private readonly CourseRepository $courseRepository,
+        private readonly ThemeRepository $themeRepository
     ) {
     }
 

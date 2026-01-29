@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col-lg-8">
-        <h1 class="text-primary-custom">{{ lesson.title }}</h1>
+        <h1 class="text-primary">{{ lesson.title }}</h1>
         <p class="text-muted">Cursus : {{ lesson.course.title }}</p>
 
         {% if hasAccess %}
@@ -26,6 +26,15 @@
             {% if lesson.videoUrl %}
                 <div class="ratio ratio-16x9 mb-4">
                     <iframe src="{{ lesson.videoUrl }}" allowfullscreen></iframe>
+                </div>
+            {% else %}
+                {# Vidéo factice par défaut #}
+                <div class="ratio ratio-16x9 mb-4">
+                    <iframe src="https://www.youtube.com/embed/OsUqvaQam34?si=yvtNW8ZNeAb85eBw"
+                            title="YouTube video player"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen></iframe>
                 </div>
             {% endif %}
 
