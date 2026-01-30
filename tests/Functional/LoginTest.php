@@ -3,22 +3,11 @@
 namespace App\Tests\Functional;
 
 use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class LoginTest extends WebTestCase
 {
-    private EntityManagerInterface $entityManager;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $kernel = self::bootKernel();
-        $this->entityManager = $kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
-    }
 
     public function testLoginPageIsAccessible(): void
     {
@@ -35,14 +24,15 @@ class LoginTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Créer un utilisateur de test
-        $user = $this->createVerifiedUser('test. login@example.com', 'Password123!');
+        // Créer un utilisateur de test avec email unique
+        $email = 'test.login' . uniqid() . '@example.com';
+        $user = $this->createVerifiedUser($email, 'Password123!');
 
         $crawler = $client->request('GET', '/connexion');
 
         $form = $crawler->selectButton('Se connecter')->form([
-            'email' => 'test.login@example.com',
-            'password' => 'Password123! ',
+            'email' => $email,
+            'password' => 'Password123!',
         ]);
 
         $client->submit($form);
@@ -56,13 +46,14 @@ class LoginTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Créer un utilisateur de test
-        $this->createVerifiedUser('test. invalid@example.com', 'Password123!');
+        // Créer un utilisateur de test avec email unique
+        $email = 'test.invalid' . uniqid() . '@example.com';
+        $this->createVerifiedUser($email, 'Password123!');
 
         $crawler = $client->request('GET', '/connexion');
 
         $form = $crawler->selectButton('Se connecter')->form([
-            'email' => 'test.invalid@example.com',
+            'email' => $email,
             'password' => 'WrongPassword',
         ]);
 
@@ -70,7 +61,7 @@ class LoginTest extends WebTestCase
 
         $this->assertResponseRedirects('/connexion');
         $client->followRedirect();
-        $this->assertSelectorExists('. alert-danger');
+        $this->assertSelectorExists('.alert-danger');
     }
 
     public function testLoginWithNonExistentUser(): void
@@ -88,14 +79,15 @@ class LoginTest extends WebTestCase
 
         $this->assertResponseRedirects('/connexion');
         $client->followRedirect();
-        $this->assertSelectorExists('. alert-danger');
+        $this->assertSelectorExists('.alert-danger');
     }
 
     public function testLogout(): void
     {
         $client = static::createClient();
 
-        $user = $this->createVerifiedUser('test.logout@example.com', 'Password123!');
+        $email = 'test.logout' . uniqid() . '@example.com';
+        $user = $this->createVerifiedUser($email, 'Password123!');
 
         // Se connecter
         $client->loginUser($user);
@@ -116,6 +108,7 @@ class LoginTest extends WebTestCase
     private function createVerifiedUser(string $email, string $password): User
     {
         $passwordHasher = static::getContainer()->get(UserPasswordHasherInterface::class);
+        $entityManager = static::getContainer()->get('doctrine')->getManager();
 
         $user = new User();
         $user->setFirstName('Test');
@@ -124,15 +117,9 @@ class LoginTest extends WebTestCase
         $user->setPassword($passwordHasher->hashPassword($user, $password));
         $user->setVerified(true);
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         return $user;
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        $this->entityManager->close();
     }
 }

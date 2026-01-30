@@ -41,7 +41,7 @@ class BuyCourseController extends AbstractController
             return $this->redirectToRoute('app_course_show', ['slug' => $slug]);
         }
 
-        $session = $this->stripeService->createCheckoutSession($user, course:  $course);
+        $session = $this->stripeService->createCheckoutSession($user, course: $course);
 
         return $this->redirect($session->url);
     }

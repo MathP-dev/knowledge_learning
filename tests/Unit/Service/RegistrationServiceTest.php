@@ -36,7 +36,7 @@ class RegistrationServiceTest extends TestCase
         $dto = new RegistrationDTO();
         $dto->firstName = 'John';
         $dto->lastName = 'Doe';
-        $dto->email = 'john.doe@example. com';
+        $dto->email = 'john.doe@example.com';
         $dto->password = 'Password123!';
 
         $this->passwordHasher
