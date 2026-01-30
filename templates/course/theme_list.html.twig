@@ -12,9 +12,8 @@
                 <div class="card-body">
                     <h5 class="card-title text-primary">{{ theme.name }}</h5>
                     <img src="{{ asset('images/themes/' ~ theme.slug ~ '.jpg') }}"
-                         class="card-img-top"
-                         alt="{{ theme.name }}"
-                         style="height: 200px; object-fit: cover;">
+                         class="card-img-top img-card-cover"
+                         alt="{{ theme.name }}">
                     <p class="card-text">{{ theme.description|default('Découvrez nos formations. ') }}</p>
                     <a href="{{ path('app_theme_show', {slug: theme.slug}) }}" class="btn btn-primary">
                         Voir les cursus

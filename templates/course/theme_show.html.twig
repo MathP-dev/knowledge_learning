@@ -26,9 +26,8 @@
                     <h5 class="card-title">{{ course.title }}</h5>
                     <p class="card-text">{{ course.description|default('Découvrez ce cursus complet.') }}</p>
                     <img src="{{ asset('images/courses/' ~ course.slug ~ '.jpg') }}"
-                         class="card-img-top"
-                         alt="{{ course.title }}"
-                         style="height: 200px; object-fit: cover;">
+                         class="card-img-top img-card-cover"
+                         alt="{{ course.title }}">
                     <p class="text-muted">{{ course.lessons|length }} leçon(s)</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="h4 text-primary mb-0">{{ course.price }} €</span>

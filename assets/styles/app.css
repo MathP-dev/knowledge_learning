@@ -75,9 +75,30 @@ footer {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* Images */
+.img-card-cover {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Sticky sidebar */
+.sticky-sidebar {
+    position: sticky;
+    top: 20px;
+}
+
+/* Admin gradient header */
+.bg-gradient-admin {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
 /* Responsive */
 @media (max-width:  768px) {
     .navbar-brand {
         font-size: 1.2rem;
+    }
+
+    .sticky-sidebar {
+        position: static;
     }
 }
