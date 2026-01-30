@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/lecon/{slug}/valider', name: 'app_lesson_validate')]
+#[Route('/lesson/{slug}/valider', name: 'app_lesson_validate')]
 #[IsGranted('ROLE_USER')]
 class ValidateLessonController extends AbstractController
 {

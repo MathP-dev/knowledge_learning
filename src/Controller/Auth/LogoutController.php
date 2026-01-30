@@ -5,7 +5,7 @@ namespace App\Controller\Auth;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/deconnexion', name: 'app_logout')]
+#[Route('/logout', name: 'app_logout')]
 class LogoutController extends AbstractController
 {
     public function __invoke(): void

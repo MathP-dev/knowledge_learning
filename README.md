@@ -232,6 +232,7 @@ knowledge-learning/
 - ✅ Gestion des utilisateurs
 - ✅ Vue d'ensemble des cursus
 - ✅ Suivi des achats
+- ✅ CRUD avec EasyAdminBundle
 
 ---
 

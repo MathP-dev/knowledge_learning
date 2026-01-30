@@ -12,9 +12,9 @@ use Symfony\Component\Uid\Uuid;
 class RegistrationService
 {
     public function __construct(
-        private UserRepository $userRepository,
-        private UserPasswordHasherInterface $passwordHasher,
-        private EmailService $emailService
+        private readonly UserRepository              $userRepository,
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly EmailService $emailService
     ) {
     }
 

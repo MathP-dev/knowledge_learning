@@ -10,14 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/lecon/{slug}/acheter', name: 'app_lesson_buy')]
+#[Route('/lesson/{slug}/acheter', name: 'app_lesson_buy')]
 #[IsGranted('ROLE_USER')]
 class BuyLessonController extends AbstractController
 {
     public function __construct(
-        private LessonService $lessonService,
-        private StripeService $stripeService,
-        private PurchaseService $purchaseService
+        private readonly LessonService $lessonService,
+        private readonly StripeService $stripeService,
+        private readonly PurchaseService $purchaseService
     ) {
     }
 

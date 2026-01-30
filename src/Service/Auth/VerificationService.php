@@ -5,7 +5,7 @@ namespace App\Service\Auth;
 use App\Entity\User;
 use App\Repository\UserRepository;
 
-class VerificationService
+readonly class VerificationService
 {
     public function __construct(
         private UserRepository $userRepository

@@ -97,7 +97,7 @@ class LoginTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         // Se déconnecter
-        $client->request('GET', '/deconnexion');
+        $client->request('GET', '/logout');
         $this->assertResponseRedirects();
 
         // Vérifier qu'on ne peut plus accéder aux pages protégées

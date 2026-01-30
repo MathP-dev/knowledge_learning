@@ -7,11 +7,11 @@ use App\Entity\Theme;
 use App\Repository\CourseRepository;
 use App\Repository\ThemeRepository;
 
-class CourseService
+readonly class CourseService
 {
     public function __construct(
-        private readonly CourseRepository $courseRepository,
-        private readonly ThemeRepository $themeRepository
+        private CourseRepository $courseRepository,
+        private ThemeRepository  $themeRepository
     ) {
     }
 

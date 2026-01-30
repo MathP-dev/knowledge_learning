@@ -42,7 +42,7 @@ class DashboardController extends AbstractController
     }
 
     /**
-     * Calcule le revenu total des achats
+     * Calculate the total purchase revenue
      */
     private function calculateTotalRevenue(array $purchases): float
     {
@@ -52,7 +52,7 @@ class DashboardController extends AbstractController
     }
 
     /**
-     * Compte le nombre d'utilisateurs vérifiés
+     * Counts the number of verified users
      */
     private function countVerifiedUsers(array $users): int
     {

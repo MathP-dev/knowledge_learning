@@ -1,5 +1,4 @@
 <?php
-// src/Entity/Certification.php
 
 namespace App\Entity;
 

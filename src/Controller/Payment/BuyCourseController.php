@@ -15,9 +15,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class BuyCourseController extends AbstractController
 {
     public function __construct(
-        private CourseService $courseService,
-        private StripeService $stripeService,
-        private PurchaseService $purchaseService
+        private readonly CourseService $courseService,
+        private readonly StripeService $stripeService,
+        private readonly PurchaseService $purchaseService
     ) {
     }
 

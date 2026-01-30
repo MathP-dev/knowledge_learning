@@ -13,12 +13,12 @@ use Stripe\Stripe;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class StripeService
+readonly class StripeService
 {
     public function __construct(
         private ParameterBagInterface $params,
         private UrlGeneratorInterface $urlGenerator,
-        private PurchaseRepository $purchaseRepository
+        private PurchaseRepository    $purchaseRepository
     ) {
         Stripe::setApiKey($this->params->get('stripe.secret_key'));
     }

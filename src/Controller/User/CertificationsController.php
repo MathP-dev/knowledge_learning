@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class CertificationsController extends AbstractController
 {
     public function __construct(
-        private CertificationService $certificationService
+        private readonly CertificationService $certificationService
     ) {
     }
 

@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/lecon/{slug}', name: 'app_lesson_show')]
+#[Route('/lesson/{slug}', name: 'app_lesson_show')]
 class LessonShowController extends AbstractController
 {
     public function __construct(

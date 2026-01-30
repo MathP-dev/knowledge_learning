@@ -20,11 +20,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PaymentSuccessController extends AbstractController
 {
     public function __construct(
-        private PurchaseService $purchaseService,
-        private UserRepository $userRepository,
-        private CourseRepository $courseRepository,
-        private LessonRepository $lessonRepository,
-        private ParameterBagInterface $params
+        private readonly PurchaseService  $purchaseService,
+        private readonly UserRepository   $userRepository,
+        private readonly CourseRepository $courseRepository,
+        private readonly LessonRepository $lessonRepository,
+        private readonly ParameterBagInterface $params
     ) {
         Stripe::setApiKey($this->params->get('stripe.secret_key'));
     }

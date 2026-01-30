@@ -8,7 +8,7 @@ use App\Entity\Purchase;
 use App\Entity\User;
 use App\Repository\PurchaseRepository;
 
-class PurchaseService
+readonly class PurchaseService
 {
     public function __construct(
         private PurchaseRepository $purchaseRepository

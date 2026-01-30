@@ -38,7 +38,7 @@ security:
             - { path: ^/admin, roles: ROLE_ADMIN }
             - { path: ^/mon-compte, roles: ROLE_USER }
             - { path: ^/cursus/. */acheter, roles: ROLE_USER }
-            - { path: ^/lecon/.*/acheter, roles: ROLE_USER }
+            - { path: ^/lesson/.*/acheter, roles: ROLE_USER }
             - { path: ^/webhook/stripe, roles: PUBLIC_ACCESS}
 
     role_hierarchy:

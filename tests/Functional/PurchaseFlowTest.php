@@ -78,7 +78,7 @@ class PurchaseFlowTest extends WebTestCase
 
         $client->loginUser($user);
 
-        $client->request('GET', '/lecon/' . $lesson->getSlug());
+        $client->request('GET', '/lesson/' . $lesson->getSlug());
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('.alert-success', 'Vous avez accès à cette leçon !');
@@ -94,7 +94,7 @@ class PurchaseFlowTest extends WebTestCase
 
         $client->loginUser($user);
 
-        $client->request('GET', '/lecon/' . $lesson->getSlug());
+        $client->request('GET', '/lesson/' . $lesson->getSlug());
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('.alert-warning', 'Vous n\'avez pas accès');

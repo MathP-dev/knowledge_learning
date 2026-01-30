@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/inscription', name: 'app_register')]
+#[Route('/register', name: 'app_register')]
 class RegisterController extends AbstractController
 {
     public function __construct(
-        private RegistrationService $registrationService,
-        private ValidatorInterface $validator
+        private readonly RegistrationService $registrationService,
+        private readonly ValidatorInterface $validator
     ) {
     }
 

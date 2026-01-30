@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Certification;
 use App\Entity\Course;
-use App\Entity\Theme;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

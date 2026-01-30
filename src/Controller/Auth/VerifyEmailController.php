@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class VerifyEmailController extends AbstractController
 {
     public function __construct(
-        private VerificationService $verificationService
+        private readonly VerificationService $verificationService
     ) {
     }
 
