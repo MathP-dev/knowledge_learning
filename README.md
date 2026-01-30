@@ -1,29 +1,3 @@
-# Créer la base de données de test
-php bin/console doctrine: database:create --env=test
-
-# Créer le schéma de la base de test
-php bin/console doctrine:schema:create --env=test
-
-# Charger les fixtures (optionnel)
-php bin/console doctrine:fixtures:load --env=test -n
-
-# Lancer TOUS les tests
-php bin/phpunit
-
-# Lancer uniquement les tests unitaires
-php bin/phpunit tests/Unit
-
-# Lancer uniquement les tests fonctionnels
-php bin/phpunit tests/Functional
-
-# Lancer un test spécifique
-php bin/phpunit tests/Unit/Service/Auth/RegistrationServiceTest.php
-
-# Lancer les tests avec couverture de code (nécessite Xdebug)
-php bin/phpunit --coverage-html coverage
-
-
-
 # 🎓 Knowledge Learning
 
 Plateforme e-learning développée avec **Symfony 7. 4**, permettant aux utilisateurs d'acheter et de suivre des formations en ligne.
@@ -57,7 +31,7 @@ Plateforme e-learning développée avec **Symfony 7. 4**, permettant aux utilisa
 ### 1. Cloner le projet
 
 ```bash
-git clone <votre-repo>
+git clone https://github.com/MathP-dev/knowledge_learning.git
 cd knowledge-learning
 ```
 
@@ -113,8 +87,8 @@ php bin/console doctrine:fixtures:load
 ```
 
 **Comptes créés par défaut :**
-- **Admin** : `admin@knowledge-learning.com` / `Admin123! `
-- **Utilisateur** : `jean. dupont@example.com` / `User123! `
+- **Admin** : `admin@knowledge-learning.com` / `Admin123!`
+- **Utilisateur** : `jean.dupont@example.com` / `User123!`
 
 ---
 
@@ -125,6 +99,12 @@ php bin/console doctrine:fixtures:load
 1. Créer un compte sur [Stripe](https://stripe.com)
 2. Récupérer vos **clés de test** dans le dashboard
 3. Les ajouter dans `.env.local`
+
+#### Clé whsec_ pour les webhooks Stripe en local :
+1. Installer Stripe CLI ``scoop install stripe``
+2. Se connecter avec ``stripe login``
+3. Lancer l'écoute des webhooks : ``stripe listen --forward-to https://localhost:8000/webhook/stripe``
+4. Sortie attendue : ``> Ready! Your webhook signing secret is whsec_...``
 
 ### Configuration Email
 
@@ -169,40 +149,10 @@ Ouvrir votre navigateur :  **http://localhost:8000**
 
 ## 🧪 Tests
 
-### Créer la base de données de test
-
-```bash
-php bin/console doctrine:database:create --env=test
-php bin/console doctrine:schema:create --env=test
-php bin/console doctrine:fixtures:load --env=test -n
-```
-
-### Lancer les tests
-
-# Configuration base de test
-php bin/console doctrine:database:create --env=test
-php bin/console doctrine: schema:create --env=test
-php bin/console doctrine:fixtures: load --env=test -n
+### Consulter le fichier CONFIG_TEST.md et TESTS_ANALYSIS.md
 
 # Lancer les tests
 php bin/phpunit
-
-```bash
-# Tous les tests
-php bin/phpunit
-
-# Tests unitaires uniquement
-php bin/phpunit tests/Unit
-
-# Tests fonctionnels uniquement
-php bin/phpunit tests/Functional
-
-# Test spécifique
-php bin/phpunit tests/Unit/Service/Auth/RegistrationServiceTest.php
-
-# Avec couverture de code (nécessite Xdebug)
-php bin/phpunit --coverage-html coverage
-```
 
 ---
 
@@ -289,7 +239,7 @@ knowledge-learning/
 
 ### Backend
 
-- **Symfony 7.4** (Framework PHP)
+- **Symfony 7.4** 
 - **Doctrine ORM** (Gestion base de données)
 - **MySQL / MariaDB** (Base de données)
 - **Twig** (Moteur de templates)
@@ -376,28 +326,8 @@ Certification
   ├── theme_id (FK)
   └── obtained_at
 ```
-
 ---
 
-## 🎨 Identité Graphique
-
-- **Police** : Comic Sans MS
-- **Couleur principale** : `#6A5ACD` (Violet)
-- **Couleur secondaire** : `#FF69B4` (Rose)
-- **Couleurs d'accentuation** : `#FFD700` (Or), `#32CD32` (Vert citron)
-
----
-
-## 📝 Bonnes Pratiques Appliquées
-
-✅ **Action Controllers** : Un contrôleur = une action avec `__invoke()`  
-✅ **Services dédiés** : Aucune logique métier dans les contrôleurs  
-✅ **Repositories Doctrine** : Accès aux données centralisé  
-✅ **DTOs** : Validation et transfert de données sécurisé  
-✅ **Tests unitaires et fonctionnels** : Couverture complète des fonctionnalités critiques  
-✅ **Authenticator personnalisé** : Gestion de la sécurité avec Symfony Security  
-✅ **Pas de code inline** : CSS et JS dans des fichiers séparés  
-✅ **Bootstrap** : Framework CSS pour un design responsive
 
 ---
 
@@ -425,52 +355,3 @@ Vérifier que Mailpit est lancé sur le port 1025 :
 ```bash
 docker ps
 ```
-
----
-
-## 📧 Contact
-
-Pour toute question sur le projet :  **votre-email@example.com**
-
----
-
-## 📄 Licence
-
-Ce projet est développé dans le cadre d'un projet académique.
-
----
-
-**🎓 Bon apprentissage avec Knowledge Learning !**
-
-# 1. Installer les dépendances
-composer install
-yarn install
-
-# 2. Configurer . env. local
-cp .env . env.local
-# Puis éditer . env.local avec vos paramètres
-
-# 3. Créer la base de données
-php bin/console doctrine:database:create
-php bin/console doctrine:migrations: migrate
-
-# 4. Charger les données de test
-php bin/console doctrine:fixtures:load
-
-# 5. Compiler les assets
-yarn build
-
-# 6. Lancer le serveur
-symfony serve
-# OU
-php -S localhost:8000 -t public/
-
-A AJOUTER : 
-INSTALLER MAILHOG POUR TESTER LES EMAILS EN LOCAL
-LANCER LE .exe et ACCEDER A L'INTERFACE SUR http://localhost:8025
-
-
-stripe : stripe listen --forward-to https://127.0.0.1:8000/webhook/stripe
-recup clé webhook et ajouter dans .env.local (whsec_....)
-
-
