@@ -8,15 +8,15 @@ class RegistrationDTO
 {
     #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
     #[Assert\Length(min: 2, max: 100)]
-    public ?string $firstName = null;
+    private ?string $firstName = null;
 
     #[Assert\NotBlank(message: 'Le nom est obligatoire. ')]
-    #[Assert\Length(min: 2, max:  100)]
-    public ?string $lastName = null;
+    #[Assert\Length(min: 2, max: 100)]
+    private ?string $lastName = null;
 
     #[Assert\NotBlank(message: 'L\'email est obligatoire.')]
     #[Assert\Email(message: 'L\'email n\'est pas valide.')]
-    public ?string $email = null;
+    private ?string $email = null;
 
     #[Assert\NotBlank(message: 'Le mot de passe est obligatoire.')]
     #[Assert\Length(min: 8, minMessage: 'Le mot de passe doit contenir au moins 8 caractères.')]
@@ -24,9 +24,49 @@ class RegistrationDTO
         pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/',
         message: 'Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.'
     )]
-    public ?string $password = null;
+    private ?string $password = null;
 
-    #[Assert\NotBlank(message: 'La confirmation du mot de passe est obligatoire.')]
-    #[Assert\EqualTo(propertyPath: 'password', message: 'Les mots de passe ne correspondent pas.')]
-    public ?string $confirmPassword = null;
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
 }

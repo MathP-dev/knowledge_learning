@@ -9,23 +9,23 @@ use App\Service\Email\EmailService;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
-class RegistrationService
+readonly class RegistrationService
 {
     public function __construct(
-        private readonly UserRepository              $userRepository,
-        private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly EmailService $emailService
+        private UserRepository              $userRepository,
+        private UserPasswordHasherInterface $passwordHasher,
+        private EmailService                $emailService
     ) {
     }
 
     public function register(RegistrationDTO $dto): User
     {
         $user = new User();
-        $user->setFirstName($dto->firstName);
-        $user->setLastName($dto->lastName);
-        $user->setEmail($dto->email);
+        $user->setFirstName($dto->getFirstName());
+        $user->setLastName($dto->getLastName());
+        $user->setEmail($dto->getEmail());
 
-        $hashedPassword = $this->passwordHasher->hashPassword($user, $dto->password);
+        $hashedPassword = $this->passwordHasher->hashPassword($user, $dto->getPassword());
         $user->setPassword($hashedPassword);
 
         $verificationToken = Uuid::v4()->toRfc4122();
