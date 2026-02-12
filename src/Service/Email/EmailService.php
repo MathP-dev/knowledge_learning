@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 
-readonly class EmailService
+class EmailService
 {
     public function __construct(
         private MailerInterface       $mailer,

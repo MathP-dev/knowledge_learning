@@ -33,11 +33,11 @@ class RegistrationServiceTest extends TestCase
     public function testRegisterCreatesUserWithCorrectData(): void
     {
         // Arrange
-        $dto = new RegistrationDTO();
-        $dto->firstName = 'John';
-        $dto->lastName = 'Doe';
-        $dto->email = 'john.doe@example.com';
-        $dto->password = 'Password123!';
+        $dto = (new RegistrationDTO())
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setEmail('john.doe@example.com')
+            ->setPassword('Password123!');
 
         $this->passwordHasher
             ->expects($this->once())
@@ -77,12 +77,12 @@ class RegistrationServiceTest extends TestCase
 
     public function testRegisterSendsVerificationEmail(): void
     {
-        // Arrange
-        $dto = new RegistrationDTO();
-        $dto->firstName = 'Jane';
-        $dto->lastName = 'Smith';
-        $dto->email = 'jane.smith@example.com';
-        $dto->password = 'Password123!';
+
+        $dto = (new RegistrationDTO())
+            ->setFirstName('Jane')
+            ->setLastName('Smith')
+            ->setEmail('jane.smith@example.com')
+            ->setPassword('Password123!');
 
         $this->passwordHasher
             ->method('hashPassword')
