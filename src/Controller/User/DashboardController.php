@@ -13,17 +13,14 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class DashboardController extends AbstractController
 {
-    public function __construct(
-        private readonly PurchaseService $purchaseService,
-        private readonly CertificationService $certificationService
-    ) {
-    }
-
-    public function __invoke(): Response
+    public function __invoke(
+        PurchaseService $purchaseService,
+        CertificationService $certificationService
+    ): Response
     {
         $user = $this->getUser();
-        $purchases = $this->purchaseService->getUserPurchases($user);
-        $certifications = $this->certificationService->getUserCertifications($user);
+        $purchases = $purchaseService->getUserPurchases($user);
+        $certifications = $certificationService->getUserCertifications($user);
 
         return $this->render('user/user_dashboard.html.twig', [
             'purchases' => $purchases,

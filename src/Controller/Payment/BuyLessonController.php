@@ -21,7 +21,12 @@ class BuyLessonController extends AbstractController
     ) {
     }
 
-    public function __invoke(string $slug): Response
+    public function __invoke(
+        string $slug,
+        LessonService $lessonService,
+        StripeService $stripeService,
+        PurchaseService $purchaseService
+    ): Response
     {
         $lesson = $this->lessonService->getLessonBySlug($slug);
 

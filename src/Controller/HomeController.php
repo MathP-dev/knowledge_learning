@@ -10,14 +10,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/', name: 'app_home')]
 class HomeController extends AbstractController
 {
-    public function __construct(
-        private readonly CourseService $courseService
-    ) {
-    }
-
-    public function __invoke(): Response
+    public function __invoke(CourseService $courseService): Response
     {
-        $themes = $this->courseService->getAllThemes();
+        $themes = $courseService->getAllThemes();
 
         return $this->render('home/index.html.twig', [
             'themes' => $themes,

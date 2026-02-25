@@ -12,15 +12,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class CertificationsController extends AbstractController
 {
-    public function __construct(
-        private readonly CertificationService $certificationService
-    ) {
-    }
-
-    public function __invoke(): Response
+    public function __invoke(CertificationService $certificationService): Response
     {
         $user = $this->getUser();
-        $certifications = $this->certificationService->getUserCertifications($user);
+        $certifications = $certificationService->getUserCertifications($user);
 
         return $this->render('user/certifications.html.twig', [
             'certifications' => $certifications,

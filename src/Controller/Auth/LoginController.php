@@ -10,19 +10,14 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 #[Route('/connexion', name: 'app_login')]
 class LoginController extends AbstractController
 {
-    public function __construct(
-        private readonly AuthenticationUtils $authenticationUtils
-    ) {
-    }
-
-    public function __invoke(): Response
+    public function __invoke(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
 
-        $error = $this->authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $this->authenticationUtils->getLastUsername();
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('auth/login.html.twig', [
             'last_username' => $lastUsername,

@@ -14,16 +14,14 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class BuyCourseController extends AbstractController
 {
-    public function __construct(
-        private readonly CourseService $courseService,
-        private readonly StripeService $stripeService,
-        private readonly PurchaseService $purchaseService
-    ) {
-    }
-
-    public function __invoke(string $slug): Response
+    public function __invoke(
+        string $slug,
+        CourseService $courseService,
+        StripeService $stripeService,
+        PurchaseService $purchaseService
+    ): Response
     {
-        $course = $this->courseService->getCourseBySlug($slug);
+        $course = $courseService->getCourseBySlug($slug);
 
         if (!$course) {
             throw $this->createNotFoundException('Ce cursus n\'existe pas.');
@@ -36,12 +34,12 @@ class BuyCourseController extends AbstractController
             return $this->redirectToRoute('app_course_show', ['slug' => $slug]);
         }
 
-        if ($this->purchaseService->hasUserPurchasedCourse($user, $course)) {
+        if ($purchaseService->hasUserPurchasedCourse($user, $course)) {
             $this->addFlash('info', 'Vous avez déjà acheté ce cursus.');
             return $this->redirectToRoute('app_course_show', ['slug' => $slug]);
         }
 
-        $session = $this->stripeService->createCheckoutSession($user, course: $course);
+        $session = $stripeService->createCheckoutSession($user, course: $course);
 
         return $this->redirect($session->url);
     }

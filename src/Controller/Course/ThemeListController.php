@@ -10,14 +10,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/themes', name: 'app_theme_list')]
 class ThemeListController extends AbstractController
 {
-    public function __construct(
-        private readonly CourseService $courseService
-    ) {
-    }
-
-    public function __invoke(): Response
+    public function __invoke(CourseService $courseService): Response
     {
-        $themes = $this->courseService->getAllThemes();
+        $themes = $courseService->getAllThemes();
 
         return $this->render('course/theme_list.html.twig', [
             'themes' => $themes,

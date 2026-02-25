@@ -13,15 +13,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ValidateLessonController extends AbstractController
 {
-    public function __construct(
-        private LessonService $lessonService,
-        private ValidationService $validationService
-    ) {
-    }
-
-    public function __invoke(string $slug): Response
+    public function __invoke(string $slug, LessonService $lessonService, ValidationService $validationService): Response
     {
-        $lesson = $this->lessonService->getLessonBySlug($slug);
+        $lesson = $lessonService->getLessonBySlug($slug);
 
         if (!$lesson) {
             throw $this->createNotFoundException('Cette leçon n\'existe pas.');
@@ -29,12 +23,12 @@ class ValidateLessonController extends AbstractController
 
         $user = $this->getUser();
 
-        if (!$this->lessonService->canUserAccessLesson($user, $lesson)) {
+        if (!$lessonService->canUserAccessLesson($user, $lesson)) {
             $this->addFlash('error', 'Vous devez d\'abord acheter cette leçon pour la valider.');
             return $this->redirectToRoute('app_lesson_show', ['slug' => $slug]);
         }
 
-        $this->validationService->validateLesson($user, $lesson);
+        $validationService->validateLesson($user, $lesson);
         $this->addFlash('success', 'Leçon validée avec succès !');
 
         return $this->redirectToRoute('app_lesson_show', ['slug' => $slug]);

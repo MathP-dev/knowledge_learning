@@ -46,7 +46,7 @@ readonly class StripeService
         $metadata['user_id'] = $user->getId();
 
         try {
-            $session = Session:: create([
+            $session = Session::create([
                 'payment_method_types' => ['card'],
                 'line_items' => [[
                     'price_data' => [
@@ -74,7 +74,7 @@ readonly class StripeService
     public function handleSuccessfulPayment(string $sessionId): Purchase
     {
         try {
-            $session = Session:: retrieve($sessionId);
+            $session = Session::retrieve($sessionId);
 
             $metadata = $session->metadata;
             $userId = $metadata['user_id'];

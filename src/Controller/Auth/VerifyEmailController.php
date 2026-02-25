@@ -10,14 +10,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/verification/{token}', name: 'app_verify_email')]
 class VerifyEmailController extends AbstractController
 {
-    public function __construct(
-        private readonly VerificationService $verificationService
-    ) {
-    }
-
-    public function __invoke(string $token): Response
+    public function __invoke(string $token, VerificationService $verificationService): Response
     {
-        $user = $this->verificationService->verifyUser($token);
+        $user = $verificationService->verifyUser($token);
 
         if (!$user) {
             $this->addFlash('error', 'Le lien de vérification est invalide ou a expiré.');

@@ -10,21 +10,16 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/lesson/{slug}', name: 'app_lesson_show')]
 class LessonShowController extends AbstractController
 {
-    public function __construct(
-        private readonly LessonService $lessonService
-    ) {
-    }
-
-    public function __invoke(string $slug): Response
+    public function __invoke(string $slug, LessonService $lessonService): Response
     {
-        $lesson = $this->lessonService->getLessonBySlug($slug);
+        $lesson = $lessonService->getLessonBySlug($slug);
 
         if (!$lesson) {
             throw $this->createNotFoundException('Cette leçon n\'existe pas.');
         }
 
         $user = $this->getUser();
-        $hasAccess = $user && $this->lessonService->canUserAccessLesson($user, $lesson);
+        $hasAccess = $user && $lessonService->canUserAccessLesson($user, $lesson);
 
         return $this->render('course/lesson_show.html.twig', [
             'lesson' => $lesson,

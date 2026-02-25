@@ -10,20 +10,15 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/theme/{slug}', name: 'app_theme_show')]
 class ThemeShowController extends AbstractController
 {
-    public function __construct(
-        private readonly CourseService $courseService
-    ) {
-    }
-
-    public function __invoke(string $slug): Response
+    public function __invoke(string $slug, CourseService $courseService): Response
     {
-        $theme = $this->courseService->getThemeBySlug($slug);
+        $theme = $courseService->getThemeBySlug($slug);
 
         if (!$theme) {
             throw $this->createNotFoundException('Ce thème n\'existe pas.');
         }
 
-        $courses = $this->courseService->getCoursesByTheme($theme);
+        $courses = $courseService->getCoursesByTheme($theme);
 
         return $this->render('course/theme_show.html.twig', [
             'theme' => $theme,
