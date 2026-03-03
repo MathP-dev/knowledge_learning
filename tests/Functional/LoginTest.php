@@ -16,8 +16,8 @@ class LoginTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h2', 'Connexion');
-        $this->assertCount(1, $crawler->filter('input[name="email"]'));
-        $this->assertCount(1, $crawler->filter('input[name="password"]'));
+        $this->assertCount(1, $crawler->filter('input[name="login[email]"]'));
+        $this->assertCount(1, $crawler->filter('input[name="login[password]"]'));
     }
 
     public function testLoginWithValidCredentials(): void
@@ -31,8 +31,8 @@ class LoginTest extends WebTestCase
         $crawler = $client->request('GET', '/connexion');
 
         $form = $crawler->selectButton('Se connecter')->form([
-            'email' => $email,
-            'password' => 'Password123!',
+            'login[email]' => $email,
+            'login[password]' => 'Password123!',
         ]);
 
         $client->submit($form);
@@ -53,8 +53,8 @@ class LoginTest extends WebTestCase
         $crawler = $client->request('GET', '/connexion');
 
         $form = $crawler->selectButton('Se connecter')->form([
-            'email' => $email,
-            'password' => 'WrongPassword',
+            'login[email]' => $email,
+            'login[password]' => 'WrongPassword',
         ]);
 
         $client->submit($form);
@@ -71,8 +71,8 @@ class LoginTest extends WebTestCase
         $crawler = $client->request('GET', '/connexion');
 
         $form = $crawler->selectButton('Se connecter')->form([
-            'email' => 'nonexistent@example.com',
-            'password' => 'Password123!',
+            'login[email]' => 'nonexistent@example.com',
+            'login[password]' => 'Password123!',
         ]);
 
         $client->submit($form);
