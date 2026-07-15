@@ -6,7 +6,7 @@ use App\Repository\CertificationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CertificationRepository::class)]
-#[ORM\UniqueConstraint(name: 'user_course_unique', columns: ['user_id', 'course_id'])] // ← Changé theme en course
+#[ORM\UniqueConstraint(name: 'user_course_unique', columns: ['user_id', 'course_id'])]
 class Certification
 {
     #[ORM\Id]
