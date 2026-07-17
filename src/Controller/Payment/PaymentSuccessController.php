@@ -2,14 +2,9 @@
 
 namespace App\Controller\Payment;
 
-use App\Repository\CourseRepository;
-use App\Repository\LessonRepository;
-use App\Repository\UserRepository;
-use App\Service\Payment\PurchaseService;
-use Stripe\Checkout\Session;
-use Stripe\Stripe;
+use App\Service\Payment\StripeService;
+use Stripe\Exception\ApiErrorException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,57 +14,43 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class PaymentSuccessController extends AbstractController
 {
-    public function __construct(
-        private readonly PurchaseService  $purchaseService,
-        private readonly UserRepository   $userRepository,
-        private readonly CourseRepository $courseRepository,
-        private readonly LessonRepository $lessonRepository,
-        private readonly ParameterBagInterface $params
-    ) {
-        Stripe::setApiKey($this->params->get('stripe.secret_key'));
-    }
-
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, StripeService $stripeService): Response
     {
-        $sessionId = $request->query->get('session_id');
+        $sessionId = (string) $request->query->get('session_id', '');
 
-        if (!$sessionId) {
-            $this->addFlash('error', 'Session de paiement introuvable.');
-            return $this->redirectToRoute('app_home');
+        if ($sessionId === '') {
+            $this->addFlash('error', 'Paiement introuvable.');
+            return $this->redirectToRoute('app_cart_index');
         }
 
         try {
-            $session = Session::retrieve($sessionId);
-            $metadata = $session->metadata;
-
-            $user = $this->userRepository->find($metadata['user_id']);
-            $type = $metadata['type'];
-
-            $course = null;
-            $lesson = null;
-
-            if ($type === 'course') {
-                $course = $this->courseRepository->find($metadata['course_id']);
-            } elseif ($type === 'lesson') {
-                $lesson = $this->lessonRepository->find($metadata['lesson_id']);
-            }
-
-            $this->purchaseService->createPurchase(
-                $user,
-                $session->payment_intent,
-                (string) ($session->amount_total / 100),
-                $course,
-                $lesson
-            );
-
-            return $this->render('payment/success.html.twig', [
-                'course' => $course,
-                'lesson' => $lesson,
-            ]);
-
-        } catch (\Exception $e) {
-            $this->addFlash('error', 'Une erreur est survenue lors du traitement de votre paiement.');
-            return $this->redirectToRoute('app_home');
+            $session = $stripeService->retrieveCheckoutSession($sessionId);
+        } catch (ApiErrorException $e) {
+            $this->addFlash('error', 'Impossible de vérifier votre paiement.');
+            return $this->redirectToRoute('app_cart_index');
         }
+
+        if ($session->payment_status !== 'paid') {
+            $this->addFlash('error', 'Le paiement n’a pas été validé.');
+            return $this->redirectToRoute('app_cart_index');
+        }
+
+        $user = $this->getUser();
+        $metadata = $session->metadata;
+        $cart = $user->getCart();
+
+        if (
+            !$cart ||
+            !isset($metadata->user_id, $metadata->cart_id) ||
+            (int) $metadata->user_id !== $user->getId() ||
+            (int) $metadata->cart_id !== $cart->getId()
+        ) {
+            $this->addFlash('error', 'Les données du paiement sont invalides.');
+            return $this->redirectToRoute('app_cart_index');
+        }
+
+        $this->addFlash('success', 'Votre paiement a été effectué avec succès !');
+
+        return $this->render('payment/success.html.twig');
     }
 }

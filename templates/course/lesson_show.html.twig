@@ -8,7 +8,7 @@
         <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
         <li class="breadcrumb-item"><a href="{{ path('app_theme_list') }}">Thèmes</a></li>
         <li class="breadcrumb-item"><a href="{{ path('app_theme_show', {slug: lesson.course.theme.slug}) }}">{{ lesson.course.theme.name }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ path('app_course_show', {slug: lesson. course.slug}) }}">{{ lesson.course.title }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_course_show', {slug: lesson.course.slug}) }}">{{ lesson.course.title }}</a></li>
         <li class="breadcrumb-item active">{{ lesson.title }}</li>
     </ol>
 </nav>
@@ -81,10 +81,12 @@
 
                     {% if app.user %}
                         {% if app.user.isVerified %}
-                            <a href="{{ path('app_lesson_buy', {slug: lesson.slug}) }}"
-                               class="btn btn-primary w-100 mb-2">
-                                Acheter cette leçon
-                            </a>
+                            <form action="{{ path('app_cart_add_lesson', {id: lesson.id}) }}" method="post">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-cart-plus"></i> Ajouter au panier
+                                </button>
+                            </form>
+
                         {% else %}
                             <div class="alert alert-warning">
                                 Activez votre compte pour acheter.

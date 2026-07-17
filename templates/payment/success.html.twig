@@ -3,49 +3,46 @@
 {% block title %}Paiement réussi - Knowledge Learning{% endblock %}
 
 {% block body %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow-lg border-success">
-            <div class="card-header bg-success text-white text-center">
-                <h2 class="mb-0">
-                    <i class="bi bi-check-circle-fill"></i> Paiement réussi !
-                </h2>
-            </div>
-            <div class="card-body text-center p-5">
-                <div class="mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        <path d="M10.97 4.97a. 235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                    </svg>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-success">
+                <div class="card-header bg-success text-white text-center">
+                    <h2 class="mb-0">
+                        <i class="bi bi-check-circle-fill"></i> Paiement réussi !
+                    </h2>
                 </div>
+                <div class="card-body text-center p-5">
+                    <div class="mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-check-circle text-success" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 0 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="M10.97 4.97a.75.75 0 0 0-1.06 1.06L9.88 6.97 7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                        </svg>
+                    </div>
 
-                <h3 class="text-success mb-3">Votre achat a été effectué avec succès !</h3>
+                    <h3 class="text-success mb-3">Votre paiement a été validé.</h3>
 
-                <p class="lead">Merci pour votre confiance. Vous avez maintenant accès à votre contenu. </p>
+                    <p class="lead">
+                        Vos accès sont en cours d'activation. Si le contenu n'apparaît pas immédiatement, revenez sur votre compte dans quelques secondes.
+                    </p>
 
-                <hr class="my-4">
+                    <hr class="my-4">
 
-                <div class="alert alert-info">
-                    <strong>📧 Confirmation envoyée</strong><br>
-                    Un email de confirmation a été envoyé à <strong>{{ app.user.email }}</strong>
-                </div>
-
-                <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
-                    <a href="{{ path('app_user_dashboard') }}" class="btn btn-primary btn-lg">
-                        Accéder à mon compte
-                    </a>
-                    <a href="{{ path('app_theme_list') }}" class="btn btn-outline-secondary">
-                        Continuer à explorer
-                    </a>
+                    <div class="d-grid gap-2 col-md-6 mx-auto mt-4">
+                        <a href="{{ path('app_user_dashboard') }}" class="btn btn-primary btn-lg">
+                            Accéder à mon compte
+                        </a>
+                        <a href="{{ path('app_theme_list') }}" class="btn btn-outline-secondary">
+                            Continuer à explorer
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="text-center mt-4">
-            <p class="text-muted">
-                <small>Vous pouvez retrouver tous vos achats dans votre espace personnel.</small>
-            </p>
+            <div class="text-center mt-4">
+                <p class="text-muted">
+                    <small>Vous pouvez retrouver tous vos achats dans votre espace personnel.</small>
+                </p>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

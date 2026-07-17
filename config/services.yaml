@@ -35,3 +35,7 @@ services:
         arguments:
             $webhookSecret: '%stripe.webhook_secret%'
 
+    App\Service\Payment\StripeService:
+        arguments:
+            $params: '@parameter_bag'
+

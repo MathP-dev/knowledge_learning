@@ -42,10 +42,11 @@
 
                 {% if app.user %}
                     {% if app.user.isVerified %}
-                        <a href="{{ path('app_course_buy', {slug: course.slug}) }}"
-                           class="btn btn-primary w-100 mb-2">
-                            Acheter le cursus
-                        </a>
+                        <form action="{{ path('app_cart_add_course', {id: course.id}) }}" method="post">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-cart-plus"></i> Ajouter au panier
+                            </button>
+                        </form>
                     {% else %}
                         <div class="alert alert-warning">
                             Vous devez activer votre compte pour acheter ce cursus.
