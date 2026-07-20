@@ -36,6 +36,7 @@
                             <td class="text-end">{{ item.formattedPrice }}</td>
                             <td class="text-end">
                                 <form action="{{ path('app_cart_remove_item', {id: item.id}) }}" method="post">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('cart_remove_item' ~ item.id) }}">
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Retirer">
                                         <i class="bi bi-trash"></i>
                                     </button>
@@ -60,11 +61,13 @@
                 </a>
                 <div>
                     <form action="{{ path('app_cart_clear') }}" method="post" class="d-inline me-2">
+                        <input type="hidden" name="_token" value="{{ csrf_token('cart_clear') }}">
                         <button type="submit" class="btn btn-outline-danger">
                             <i class="bi bi-trash"></i> Vider le panier
                         </button>
                     </form>
                     <form action="{{ path('app_cart_checkout') }}" method="post" class="d-inline" data-turbo="false">
+                        <input type="hidden" name="_token" value="{{ csrf_token('cart_checkout') }}">
                         <button type="submit" class="btn btn-primary btn-lg">
                             <i class="bi bi-credit-card"></i> Procéder au paiement {{ totalFormatted }}
                         </button>

@@ -82,6 +82,7 @@
                     {% if app.user %}
                         {% if app.user.isVerified %}
                             <form action="{{ path('app_cart_add_lesson', {id: lesson.id}) }}" method="post">
+                                <input type="hidden" name="_token" value="{{ csrf_token('cart_add_lesson' ~ lesson.id) }}">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="bi bi-cart-plus"></i> Ajouter au panier
                                 </button>

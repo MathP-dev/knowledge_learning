@@ -6,6 +6,7 @@ use App\Entity\Course;
 use App\Entity\Lesson;
 use App\Entity\Theme;
 use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -15,17 +16,20 @@ class PurchaseFlowTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Créer un utilisateur non vérifié avec email unique
         $user = $this->createUser('unverified' . uniqid() . '@example.com', false);
         $course = $this->createCourse();
 
         $client->loginUser($user);
 
-        $client->request('GET', '/cursus/' . $course->getSlug() . '/acheter');
+        $token = $this->generateCsrfToken($client, 'cart_add_course' . $course->getId());
+
+        $client->request('POST', '/cart/add/course/' . $course->getId(), [
+            '_token' => $token,
+        ]);
 
         $this->assertResponseRedirects();
         $client->followRedirect();
-        $this->assertSelectorExists('.alert-error, .alert-danger');
+        $this->assertSelectorExists('.alert-error, .alert-danger, .alert-warning');
     }
 
     public function testVerifiedUserCanAccessBuyPage(): void
@@ -37,26 +41,34 @@ class PurchaseFlowTest extends WebTestCase
 
         $client->loginUser($user);
 
-        // Note: En environnement de test, Stripe peut ne pas être configuré
-        // Le test vérifie que l'utilisateur vérifié peut tenter d'acheter (pas de blocage côté app)
-        $client->request('GET', '/cursus/' . $course->getSlug() . '/acheter');
+        $router = static::getContainer()->get('router');
+        $courseUrl = $router->generate('app_course_show', ['slug' => $course->getSlug()]);
 
-        $statusCode = $client->getResponse()->getStatusCode();
+        // On charge la vraie page et on soumet le vrai formulaire qu'elle contient
+        $crawler = $client->request('GET', $courseUrl);
+        $form = $crawler->filter('form[action$="/cart/add/course/' . $course->getId() . '"]')->form();
+        $client->submit($form);
 
-        // Le status peut être :
-        // - 302 (redirection vers Stripe) si Stripe est configuré
-        // - 500 (erreur Stripe) si Stripe n'est pas configuré en test (acceptable)
-        // Ce qui compte c'est que l'utilisateur vérifié a le DROIT d'accéder (pas de 403)
-        $this->assertNotEquals(403, $statusCode, 'L\'utilisateur vérifié doit pouvoir accéder à la page d\'achat');
+        $this->assertResponseRedirects('/cart');
+        $crawler = $client->followRedirect();
+        $this->assertSelectorTextContains('.alert-success', 'ajoutée au panier');
+
+        // $crawler pointe maintenant sur /cart (résultat du followRedirect)
+        // on récupère le formulaire de checkout qui s'y trouve, sans nouvelle requête GET
+        // $="" => 'se termine par' car prix formaté
+        $checkoutForm = $crawler->filter('form[action$="/cart/checkout"]')->form();
+        $client->submit($checkoutForm);
+
+        $this->assertResponseRedirects();
     }
 
-    public function testGuestCannotBuyCourse(): void
+    public function testGuestCannotAddToCart(): void
     {
         $client = static::createClient();
 
         $course = $this->createCourse();
 
-        $client->request('GET', '/cursus/' . $course->getSlug() . '/acheter');
+        $client->request('POST', '/cart/add/course/' . $course->getId());
 
         $this->assertResponseRedirects('/connexion');
     }
@@ -169,5 +181,24 @@ class PurchaseFlowTest extends WebTestCase
 
         $entityManager->persist($purchase);
         $entityManager->flush();
+    }
+
+    private function generateCsrfToken(KernelBrowser $client, string $tokenId, string $warmupUrl = '/cart'): string
+    {
+        $client->request('GET', $warmupUrl);
+        $request = $client->getRequest();
+
+        $requestStack = static::getContainer()->get('request_stack');
+        $requestStack->push($request);
+
+        $token = static::getContainer()
+            ->get('security.csrf.token_manager')
+            ->getToken($tokenId)
+            ->getValue();
+
+        $request->getSession()->save();
+        $requestStack->pop();
+
+        return $token;
     }
 }

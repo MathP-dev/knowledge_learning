@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Controller\Payment;
+
 use App\Entity\Lesson;
 use App\Service\Payment\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -13,8 +15,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class AddLessonController extends AbstractController
 {
-    public function __invoke(int $id, CartService $cartService, EntityManagerInterface $em): Response
+    public function __invoke(Request $request, int $id, CartService $cartService, EntityManagerInterface $em): Response
     {
+        if (!$this->isCsrfTokenValid('cart_add_lesson' . $id, $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+
         $user = $this->getUser();
 
         if (!$user->isVerified()) {

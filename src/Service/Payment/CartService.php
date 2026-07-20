@@ -15,7 +15,6 @@ class CartService
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private PurchaseRepository $purchaseRepo,
         private PurchaseService $purchaseService,
     ) {}
 

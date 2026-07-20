@@ -5,6 +5,7 @@ namespace App\Controller\Payment;
 use App\Service\Payment\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -12,8 +13,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ClearCartController extends AbstractController
 {
-    public function __invoke(CartService $cartService): Response
+    public function __invoke(Request $request, CartService $cartService): Response
     {
+        if (!$this->isCsrfTokenValid('cart_clear', $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+
         $user = $this->getUser();
         $cart = $cartService->getOrCreateCart($user);
 
