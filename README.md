@@ -104,7 +104,7 @@ php bin/console doctrine:fixtures:load
 ```
 
 **Comptes créés par défaut :**
-- **Admin** : `admin@knowledge-learning.com` / `Admin123!`
+- **Admin** : `admin@knowledge-learning.com` / `DEFINE_PASSWORD_HERE`
 - **Utilisateur** : `jean.dupont@example.com` / `User123!`
 
 ---
