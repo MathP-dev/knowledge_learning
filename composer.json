@@ -40,6 +40,7 @@
         "symfony/translation": "7.4.*",
         "symfony/twig-bundle": "7.4.*",
         "symfony/uid": "7.4.*",
+        "symfony/ux-turbo": "^2.9",
         "symfony/validator": "7.4.*",
         "symfony/webpack-encore-bundle": "^2.1",
         "symfony/yaml": "7.4.*",
@@ -55,7 +56,6 @@
         "symfony/maker-bundle": "^1.52",
         "symfony/phpunit-bridge": "^7.0",
         "symfony/stopwatch": "7.4.*",
-        "symfony/ux-turbo": "*",
         "symfony/web-profiler-bundle": "7.4.*"
     },
     "config": {
