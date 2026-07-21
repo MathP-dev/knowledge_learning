@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
         $admin->setFirstName('Admin');
         $admin->setLastName('Knowledge');
         $admin->setEmail('admin@knowledge-learning.com');
-        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'Admin123!'));
+        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'DEFINE_PASSWORD_HERE'));
         $admin->setVerified(true);
         $admin->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
         $manager->persist($admin);
